@@ -140,6 +140,7 @@ const PartnersSection = () => {
                   alt={partner.name}
                   fill
                   className="object-contain"
+                  unoptimized={true}
                 />
               </motion.div>
               
