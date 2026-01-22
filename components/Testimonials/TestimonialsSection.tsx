@@ -155,6 +155,7 @@ const TestimonialsSection = () => {
                     alt={testimonial.name}
                     fill
                     className="object-cover"
+                    unoptimized={true}
                   />
                 </motion.div>
                 <div>
