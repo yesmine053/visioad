@@ -1,0 +1,2 @@
+2026-01-23 11:24:50 | ID: 14 | To: yesminebkr24@gmail.com | From: client@exemple.com | Success: No
+2026-01-23 11:25:33 | ID: 15 | To: yesminebkr24@gmail.com | From: client@exemple.com | Success: No

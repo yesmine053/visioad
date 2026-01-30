@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Tester l'API Contact</h2>
+    <button onclick="testAPI()">Tester l'API</button>
+    <div id="result"></div>
+
+    <script>
+    async function testAPI() {
+        const data = {
+            name: "Test API",
+            email: "test@example.com",
+            phone: "+21612345678",
+            subject: "Test via navigateur",
+            message: "Test de l'API contact depuis le navigateur"
+        };
+
+        try {
+            const response = await fetch('http://localhost/Visioad/backend/api/contact.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            
+            const result = await response.json();
+            document.getElementById('result').innerHTML = 
+                `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+            console.log('Réponse:', result);
+        } catch (error) {
+            document.getElementById('result').innerHTML = 
+                `Erreur: ${error.message}`;
+            console.error('Erreur:', error);
+        }
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+2026-01-23 10:56:43 === NOUVELLE REQUÊTE ===
+Méthode: POST
+Content-Type: application/json
+Données brutes reçues: {\
+JSON décodé: 
+Erreur JSON: Syntax error
+Parsé comme query string: Array
+(
+    [{\] => 
+)
+
+Données finales: Array
+(
+    [{\] => 
+)
+
+Erreurs de validation: Nom manquant, Email manquant, Message manquant
+2026-01-23 10:56:58 === NOUVELLE REQUÊTE ===
+Méthode: POST
+Content-Type: application/json
+Données brutes reçues: {name:Test,email:test@test.com,message:Test message}
+JSON décodé: 
+Erreur JSON: Syntax error
+Parsé comme query string: Array
+(
+    [{name:Test,email:test@test_com,message:Test_message}] => 
+)
+
+Données finales: Array
+(
+    [{name:Test,email:test@test_com,message:Test_message}] => 
+)
+
+Erreurs de validation: Nom manquant, Email manquant, Message manquant
+2026-01-23 10:57:16 === NOUVELLE REQUÊTE ===
+Méthode: POST
+Content-Type: application/json
+Données brutes reçues: {
+    "email":  "test@test.com",
+    "message":  "Test message",
+    "name":  "Test"
+}
+JSON décodé: Array
+(
+    [email] => test@test.com
+    [message] => Test message
+    [name] => Test
+)
+
+Données finales: Array
+(
+    [email] => test@test.com
+    [message] => Test message
+    [name] => Test
+)
+
+✅ Contact créé avec ID: 9
+=== FIN REQUÊTE ===
+
+2026-01-23 10:58:14 === NOUVELLE REQUÊTE ===
+Méthode: POST
+Content-Type: application/json
+Données brutes reçues: {"name":"Test PHP","email":"test@php.com","message":"Test depuis PHP"}
+JSON décodé: Array
+(
+    [name] => Test PHP
+    [email] => test@php.com
+    [message] => Test depuis PHP
+)
+
+Données finales: Array
+(
+    [name] => Test PHP
+    [email] => test@php.com
+    [message] => Test depuis PHP
+)
+
+✅ Contact créé avec ID: 10
+=== FIN REQUÊTE ===
+
+2026-01-23 11:09:52 === NOUVELLE REQUÊTE ===
+Méthode: GET
+Content-Type: Non défini
+=== FIN REQUÊTE ===
+

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vérification Emails VisioAD</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .test { margin: 10px 0; padding: 10px; border: 1px solid #ddd; }
+        .success { background: #d4edda; }
+        .error { background: #f8d7da; }
+    </style>
+</head>
+<body>
+    <h2>📧 Tests Emails VisioAD</h2>
+    
+    <div class="test">
+        <h3>Test 1 : Formulaire Contact</h3>
+        <p>Status: <span id="status1">En attente...</span></p>
+        <button onclick="testContact()">Tester</button>
+    </div>
+    
+    <div class="test">
+        <h3>Logs Backend</h3>
+        <pre id="logs">Chargement...</pre>
+        <button onclick="loadLogs()">Actualiser logs</button>
+    </div>
+    
+    <script>
+    async function testContact() {
+        const status = document.getElementById('status1');
+        status.innerHTML = 'Envoi en cours...';
+        
+        try {
+            const response = await fetch('http://localhost:8080/Visioad/contact.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    name: "Test Edge",
+                    email: "test@edge.com",
+                    subject: "Test depuis Edge",
+                    phone: "0123456789",
+                    message: "Ceci est un test depuis Edge"
+                })
+            });
+            
+            const data = await response.json();
+            status.innerHTML = data.success ? '✅ Succès!' : '❌ Erreur';
+            status.className = data.success ? 'success' : 'error';
+            alert(data.message);
+            
+        } catch (error) {
+            status.innerHTML = '❌ Erreur: ' + error.message;
+            status.className = 'error';
+        }
+    }
+    
+    async function loadLogs() {
+        try {
+            const response = await fetch('http://localhost:8080/Visioad/contact_log.txt');
+            const text = await response.text();
+            document.getElementById('logs').textContent = text || 'Aucun log';
+        } catch {
+            document.getElementById('logs').textContent = 'Impossible de charger les logs';
+        }
+    }
+    
+    // Charger les logs au démarrage
+    loadLogs();
+    </script>
+</body>
+</html>
