@@ -1,0 +1,15 @@
+# D:/xampp/htdocs/visioad/backend/.htaccess
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Allow direct access to PHP files
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [L]
+    
+    # Handle CORS preflight requests
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^(.*)$ $1 [R=200,L]
+</IfModule>
+
+# IMPORTANT : NE PAS définir les en-têtes CORS ici
+# Les en-têtes CORS seront définis uniquement dans les fichiers PHP

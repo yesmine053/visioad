@@ -1,0 +1,262 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #d12127;
+  --color-secondary: #1e293b;
+  --color-accent: #3b82f6;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a81c21;
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card hover effects */
+.hover-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Button styles */
+.btn-primary {
+  @apply bg-primary text-white font-semibold py-3 px-6 rounded-lg 
+         hover:bg-primary/90 transition-all duration-300 
+         hover:shadow-lg hover:shadow-primary/25;
+}
+
+.btn-secondary {
+  @apply bg-white text-primary border-2 border-primary font-semibold py-3 px-6 rounded-lg 
+         hover:bg-primary hover:text-white transition-all duration-300;
+}
+
+/* Section spacing */
+.section-padding {
+  @apply py-12 md:py-20 lg:py-24;
+}
+
+/* Container */
+.container-custom {
+  @apply container mx-auto px-4 max-w-7xl;
+}
+/* Chatbot specific styles */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(209, 33, 39, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(209, 33, 39, 0.8);
+  }
+}
+
+.chatbot-button {
+  animation: float 3s ease-in-out infinite, pulse-glow 2s ease-in-out infinite;
+}
+
+/* Smooth transitions for chat */
+.chat-message-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.chat-message-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+/* Éditeur Markdown personnalisé */
+.markdown-editor {
+  font-family: 'SF Mono', Monaco, 'Cascadia Mono', 'Segoe UI Mono', 
+               'Roboto Mono', 'Ubuntu Mono', monospace;
+}
+
+.markdown-editor:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+/* Prévisualisation Markdown */
+.prose {
+  max-width: none;
+}
+
+.prose h1 {
+  @apply text-3xl font-bold mt-8 mb-4;
+}
+
+.prose h2 {
+  @apply text-2xl font-bold mt-6 mb-3;
+}
+
+.prose h3 {
+  @apply text-xl font-bold mt-5 mb-2;
+}
+
+.prose p {
+  @apply my-4 leading-relaxed;
+}
+
+.prose ul {
+  @apply list-disc pl-5 my-4;
+}
+
+.prose ol {
+  @apply list-decimal pl-5 my-4;
+}
+
+.prose strong {
+  @apply font-bold;
+}
+
+.prose em {
+  @apply italic;
+}
+
+.prose a {
+  @apply text-blue-600 hover:underline;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-gray-300 pl-4 italic my-4;
+}
+
+.prose code {
+  @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+}
+
+.prose pre {
+  @apply bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto my-4;
+}
+
+/* Drag and drop amélioré */
+.drag-active {
+  @apply border-blue-500 bg-blue-50;
+}
+/* Ajoutez ces lignes dans Frontend/app/globals.css */
+/* ═══════════════════════════════════════════════════════════════
+   DARK MODE — Admin dashboard uniquement
+   Ajoutez ce bloc à la FIN de Frontend/app/globals.css
+   ═══════════════════════════════════════════════════════════════ */
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* Fond global */
+html.dark body                        { background-color: #111827; }
+
+/* Backgrounds */
+html.dark .bg-white                   { background-color: #1f2937 !important; }
+html.dark .bg-gray-50                 { background-color: #111827 !important; }
+html.dark .bg-gray-100                { background-color: #374151 !important; }
+
+/* Textes */
+html.dark .text-gray-900              { color: #f9fafb   !important; }
+html.dark .text-gray-700              { color: #d1d5db   !important; }
+html.dark .text-gray-600              { color: #9ca3af   !important; }
+html.dark .text-gray-500              { color: #6b7280   !important; }
+html.dark .text-gray-400              { color: #4b5563   !important; }
+
+/* Bordures */
+html.dark .border-gray-100            { border-color: #374151 !important; }
+html.dark .border-gray-200            { border-color: #374151 !important; }
+
+/* Hover */
+html.dark .hover\:bg-gray-50:hover    { background-color: #374151 !important; }
+html.dark .hover\:bg-gray-100:hover   { background-color: #4b5563 !important; }
+
+/* Cards arrondies */
+html.dark .rounded-xl,
+html.dark .rounded-2xl                { background-color: #1f2937; }
+
+/* Inputs */
+html.dark input,
+html.dark select,
+html.dark textarea                    { background-color: #374151 !important; border-color: #4b5563 !important; color: #f9fafb !important; }
+html.dark input::placeholder          { color: #6b7280 !important; }
+
+/* Tables */
+html.dark thead                       { background-color: #111827 !important; }
+html.dark tbody tr:hover              { background-color: #374151 !important; }
+
+/* Sidebar */
+html.dark aside                       { background-color: #1f2937 !important; border-color: #374151 !important; }
+
+/* Header */
+html.dark header                      { background-color: #1f2937 !important; border-color: #374151 !important; }
+
+/* Footer */
+html.dark footer                      { background-color: #1f2937 !important; border-color: #374151 !important; }
+
+/* Transitions */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 200ms;
+}
