@@ -226,9 +226,6 @@ export const mediaApi = {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 // Formater un nombre en français
-export function formatNumber(num: number): string {
-  return new Intl.NumberFormat('fr-FR').format(num);
-}
 
 // Tester la connexion au backend
 export async function testConnection(): Promise<boolean> {

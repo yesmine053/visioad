@@ -18,7 +18,7 @@ export default function AdminDashboardPage() {
     try {
       const user = JSON.parse(userRaw);
       if (user.role !== 'admin') {
-        window.location.href = '/';        
+        window.location.href = '/';
         return;
       }
       setReady(true);
@@ -41,5 +41,6 @@ export default function AdminDashboardPage() {
     );
   }
 
+  // ✅ Pas de AdminLayout — Dashboard.tsx a son propre layout complet
   return <AdminDashboard />;
 }

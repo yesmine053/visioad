@@ -1,56 +1,80 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-
+import { useRouter, usePathname } from 'next/navigation';
 import Sidebar from './components/Sidebar';
 import Header  from './components/Header';
 
-const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [authenticated, setAuthenticated] = useState<boolean|null>(null);
-  const [sidebarOpen, setSidebarOpen]     = useState(true);
+interface AdminLayoutProps { children: React.ReactNode; }
 
+const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [isSidebarOpen,   setIsSidebarOpen]   = useState(true);
+  const router   = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    const token   = localStorage.getItem('access_token');
-    const userRaw = localStorage.getItem('user');
-    if (!token || !userRaw) { window.location.href = '/login'; return; }
-    try {
-      const user = JSON.parse(userRaw);
-      if (user.role !== 'admin') {
-        window.location.href = '/';
-        return;
+    const checkAuth = async () => {
+      try {
+        const token = localStorage.getItem('access_token');
+        if (!token) { router.push('/login'); return; }
+        const res  = await fetch('http://localhost:8089/visioad/backend/api/auth.php?action=check', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        if (!data.success || data.user?.role !== 'admin') {
+          localStorage.removeItem('access_token');
+          router.push('/login');
+        } else {
+          setIsAuthenticated(true);
+        }
+      } catch {
+        localStorage.removeItem('access_token');
+        router.push('/login');
       }
-      setAuthenticated(true);
-    } catch { window.location.href = '/login'; }
-  }, []); // ← exécuté une seule fois au montage
+    };
+    checkAuth();
+  }, [router, pathname]);
 
-  if (authenticated === null) return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-10 h-10 border-4 border-[#d12127] border-t-transparent rounded-full animate-spin"/>
-    </div>
-  );
-  if (!authenticated) return null;
+  if (isAuthenticated === null) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-12 h-12 border-4 border-gray-200 rounded-full animate-spin" style={{ borderTopColor: '#d12127' }} />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar fixe à gauche */}
-      <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(o => !o)} />
+    <div className="flex h-screen bg-gray-50 overflow-hidden">
 
-      {/* Contenu principal — pousse à droite de la sidebar */}
-      <div className="flex-1 min-w-0 lg:ml-64">
-        <Header onMenuClick={() => setSidebarOpen(o => !o)} />
-        <main className="pt-16 min-h-screen">
-          <div className="p-4 md:p-6">{children}</div>
+      {/* Sidebar — flex-shrink-0, largeur 256px ou 0 */}
+      <Sidebar isOpen={isSidebarOpen} onToggle={() => setIsSidebarOpen(o => !o)} />
+
+      {/* Zone droite — prend tout l'espace restant */}
+      <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
+
+        {/* Header avec hamburger ☰ */}
+        <Header onMenuClick={() => setIsSidebarOpen(o => !o)} />
+
+        {/* Contenu scrollable */}
+        <main className="flex-1 overflow-y-auto">
+          <div className="p-4 md:p-6">
+            {children}
+          </div>
         </main>
-        <footer className="border-t bg-white py-3 px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
-            <p>© {new Date().getFullYear()} VisioAD — Tous droits réservés.</p>
-            <div className="flex items-center gap-3 mt-1 md:mt-0">
-              <span className="px-2 py-0.5 bg-green-50 text-green-700 rounded text-xs">v1.0.0</span>
-              <span>Panneau d'administration</span>
+
+        {/* Footer */}
+        <footer className="flex-shrink-0 border-t bg-white py-3 px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 gap-1">
+            <p>© {new Date().getFullYear()} VisioAD. Tous droits réservés.</p>
+            <div className="flex items-center gap-3 text-xs">
+              <span className="px-2 py-0.5 bg-green-100 text-green-700 rounded-full font-medium">v1.0.0</span>
             </div>
           </div>
         </footer>
+
       </div>
     </div>
   );

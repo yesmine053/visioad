@@ -84,8 +84,19 @@ function LoginForm() {
       if (data.success) {
         // Ajouter name = username pour le Header
         const userData = { ...data.user, name: data.user.username };
+       if (data.success) {
+        const userData = { ...data.user, name: data.user.username };
+        localStorage.setItem('access_token', data.access_token); // ← AJOUTER
         localStorage.setItem('user',         JSON.stringify(userData));
         localStorage.setItem('permissions',  JSON.stringify(data.permissions || []));
+        setSuccess(`Bienvenue ${data.user?.username || ''} !`);
+        const dest = (redirect && redirect.startsWith('/admin') && data.user?.role === 'admin') 
+          ? redirect 
+          : data.user?.role === 'admin' 
+          ? '/admin/dashboard' 
+          : '/';
+        setTimeout(() => { window.location.href = dest; }, 300);
+      }
         setSuccess(`Bienvenue ${data.user?.username || ''} !`);
         const dest = (redirect && redirect.startsWith('/admin') && data.user?.role === 'admin') ? redirect : data.user?.role === 'admin' ? '/admin/dashboard' : '/';
         setTimeout(() => { window.location.href = dest; }, 300);
