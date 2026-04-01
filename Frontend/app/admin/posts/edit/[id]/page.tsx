@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const ImageInput: React.FC<{ url: string; onChange: (url: string) => void }> = ({ url, onChange }) => {
   const [drag, setDrag]           = useState(false);
   const [tab, setTab]             = useState<'url' | 'upload'>('url');
